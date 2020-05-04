@@ -8,8 +8,16 @@ db.authenticate().then(() => console.log('Database Connected....')).catch((err) 
 
 const app = express();
 
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+
+//body parser
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(express.static(path.join(__dirname, 'public')))
+
 app.get('/', (req, res) => {
-    res.send('hello');
+    res.render('index', { layout: 'landing' });
 })
 
 //Gig routes
